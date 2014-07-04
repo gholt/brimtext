@@ -175,13 +175,13 @@ func NewDefaultAlignOptions() *AlignOptions {
 //
 // Which will format tables like:
 //
-// +----------+-------------+--------+----------+
-// |          | Bob         | Sue    | John     |
-// +----------+-------------+--------+----------+
-// | Hometown | San Antonio | Austin | New York |
-// | Mother   | Bessie      | Mary   | Sarah    |
-// | Father   | Rick        | Dan    | Mike     |
-// +----------+-------------+--------+----------+
+//  +----------+-------------+--------+----------+
+//  |          | Bob         | Sue    | John     |
+//  +----------+-------------+--------+----------+
+//  | Hometown | San Antonio | Austin | New York |
+//  | Mother   | Bessie      | Mary   | Sarah    |
+//  | Father   | Rick        | Dan    | Mike     |
+//  +----------+-------------+--------+----------+
 func NewSimpleAlignOptions() *AlignOptions {
 	return &AlignOptions{
 		FirstDR:                 "+-",
