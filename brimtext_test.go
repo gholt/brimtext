@@ -179,7 +179,6 @@ Father   Rick        Dan    Mike
 		[]string{"Mother", "Bessie", "Mary", "Sarah"},
 		[]string{"Father", "Rick", "Dan", "Mike"},
 	}, opts)
-	fmt.Println(out)
 	exp = `+----------+-------------+--------+----------+
 |          | Bob         | Sue    | John     |
 +----------+-------------+--------+----------+

@@ -351,31 +351,31 @@ func NewUnicodeBoxedAlignOptions() *AlignOptions {
 	}
 }
 
-// Align will format a table according to options. If opt is nil,
+// Align will format a table according to options. If opts is nil,
 // NewDefaultAlignOptions is used.
-func Align(data [][]string, opt *AlignOptions) string {
+func Align(data [][]string, opts *AlignOptions) string {
 	if data == nil || len(data) == 0 {
 		return ""
 	}
-	if opt == nil {
-		opt = NewDefaultAlignOptions()
+	if opts == nil {
+		opts = NewDefaultAlignOptions()
 	}
 	newData := make([][]string, 0, len(data))
 	for _, row := range data {
 		if row == nil {
-			if !opt.NilBetweenEveryRow {
+			if !opts.NilBetweenEveryRow {
 				newData = append(newData, nil)
 			}
 			continue
 		}
-		if opt.Widths != nil {
+		if opts.Widths != nil {
 			newRow := make([]string, 0, len(row))
 			for col, cell := range row {
-				if col >= len(opt.Widths) || opt.Widths[col] <= 0 {
+				if col >= len(opts.Widths) || opts.Widths[col] <= 0 {
 					newRow = append(newRow, cell)
 					continue
 				}
-				newRow = append(newRow, Wrap(cell, opt.Widths[col], "", ""))
+				newRow = append(newRow, Wrap(cell, opts.Widths[col], "", ""))
 			}
 			row = newRow
 		}
@@ -392,7 +392,7 @@ func Align(data [][]string, opt *AlignOptions) string {
 			}
 		}
 		newRows := make([][]string, 0)
-		if opt.NilBetweenEveryRow && len(newData) != 0 {
+		if opts.NilBetweenEveryRow && len(newData) != 0 {
 			newData = append(newData, nil)
 		}
 		for c := 0; c < maxCells; c++ {
@@ -423,7 +423,7 @@ func Align(data [][]string, opt *AlignOptions) string {
 			}
 		}
 	}
-	alignments := opt.Alignments
+	alignments := opts.Alignments
 	if alignments == nil || len(alignments) < len(widths) {
 		newal := append(make([]Alignment, 0, len(widths)), alignments...)
 		for len(newal) < len(widths) {
@@ -431,72 +431,72 @@ func Align(data [][]string, opt *AlignOptions) string {
 		}
 		alignments = newal
 	}
-	est := len(opt.RowFirstUD)
+	est := len(opts.RowFirstUD)
 	for _, w := range widths {
-		est += w + len(opt.RowUD)
+		est += w + len(opts.RowUD)
 	}
-	est += len(opt.RowLastUD) + 1
+	est += len(opts.RowLastUD) + 1
 	est *= len(data)
 	buf := bytes.NewBuffer(make([]byte, 0, est))
-	if !AllEqual("", opt.FirstDR, opt.FirstFirstDLR, opt.FirstDLR, opt.FirstLR, opt.FirstDL) {
-		buf.WriteString(opt.FirstDR)
+	if !AllEqual("", opts.FirstDR, opts.FirstFirstDLR, opts.FirstDLR, opts.FirstLR, opts.FirstDL) {
+		buf.WriteString(opts.FirstDR)
 		for col, width := range widths {
 			if col == 1 {
-				buf.WriteString(opt.FirstFirstDLR)
+				buf.WriteString(opts.FirstFirstDLR)
 			} else if col != 0 {
-				buf.WriteString(opt.FirstDLR)
+				buf.WriteString(opts.FirstDLR)
 			}
 			for i := 0; i < width; i++ {
-				buf.WriteString(opt.FirstLR)
+				buf.WriteString(opts.FirstLR)
 			}
 		}
-		buf.WriteString(opt.FirstDL)
+		buf.WriteString(opts.FirstDL)
 		buf.WriteByte('\n')
 	}
 	firstNil := true
 	for _, row := range data {
 		if row == nil {
 			if firstNil {
-				if !AllEqual("", opt.FirstNilFirstUDR, opt.FirstNilFirstUDLR, opt.FirstNilUDLR, opt.FirstNilLR, opt.FirstNilLastUDL) {
-					buf.WriteString(opt.FirstNilFirstUDR)
+				if !AllEqual("", opts.FirstNilFirstUDR, opts.FirstNilFirstUDLR, opts.FirstNilUDLR, opts.FirstNilLR, opts.FirstNilLastUDL) {
+					buf.WriteString(opts.FirstNilFirstUDR)
 					for col, width := range widths {
 						if col == 1 {
-							buf.WriteString(opt.FirstNilFirstUDLR)
+							buf.WriteString(opts.FirstNilFirstUDLR)
 						} else if col != 0 {
-							buf.WriteString(opt.FirstNilUDLR)
+							buf.WriteString(opts.FirstNilUDLR)
 						}
 						for i := 0; i < width; i++ {
-							buf.WriteString(opt.FirstNilLR)
+							buf.WriteString(opts.FirstNilLR)
 						}
 					}
-					buf.WriteString(opt.FirstNilLastUDL)
+					buf.WriteString(opts.FirstNilLastUDL)
 				}
 				firstNil = false
 			} else {
-				if !AllEqual("", opt.NilFirstUDR, opt.NilFirstUDLR, opt.NilUDLR, opt.NilLR, opt.NilLastUDL) {
-					buf.WriteString(opt.NilFirstUDR)
+				if !AllEqual("", opts.NilFirstUDR, opts.NilFirstUDLR, opts.NilUDLR, opts.NilLR, opts.NilLastUDL) {
+					buf.WriteString(opts.NilFirstUDR)
 					for col, width := range widths {
 						if col == 1 {
-							buf.WriteString(opt.NilFirstUDLR)
+							buf.WriteString(opts.NilFirstUDLR)
 						} else if col != 0 {
-							buf.WriteString(opt.NilUDLR)
+							buf.WriteString(opts.NilUDLR)
 						}
 						for i := 0; i < width; i++ {
-							buf.WriteString(opt.NilLR)
+							buf.WriteString(opts.NilLR)
 						}
 					}
-					buf.WriteString(opt.NilLastUDL)
+					buf.WriteString(opts.NilLastUDL)
 				}
 			}
 			buf.WriteByte('\n')
 			continue
 		}
-		buf.WriteString(opt.RowFirstUD)
+		buf.WriteString(opts.RowFirstUD)
 		for c, v := range row {
 			if c == 1 {
-				buf.WriteString(opt.RowSecondUD)
+				buf.WriteString(opts.RowSecondUD)
 			} else if c != 0 {
-				buf.WriteString(opt.RowUD)
+				buf.WriteString(opts.RowUD)
 			}
 			switch alignments[c] {
 			case Right:
@@ -509,36 +509,36 @@ func Align(data [][]string, opt *AlignOptions) string {
 					buf.WriteRune(' ')
 				}
 				buf.WriteString(v)
-				if opt.LeaveTrailingWhitespace || c < len(row)-1 {
+				if opts.LeaveTrailingWhitespace || c < len(row)-1 {
 					for i := widths[c] - ((widths[c]-len(v))/2 + len(v)); i > 0; i-- {
 						buf.WriteRune(' ')
 					}
 				}
 			default:
 				buf.WriteString(v)
-				if opt.LeaveTrailingWhitespace || c < len(row)-1 {
+				if opts.LeaveTrailingWhitespace || c < len(row)-1 {
 					for i := widths[c] - len(v); i > 0; i-- {
 						buf.WriteRune(' ')
 					}
 				}
 			}
 		}
-		buf.WriteString(opt.RowLastUD)
+		buf.WriteString(opts.RowLastUD)
 		buf.WriteByte('\n')
 	}
-	if !AllEqual("", opt.LastUR, opt.LastFirstULR, opt.LastULR, opt.LastLR, opt.LastUL) {
-		buf.WriteString(opt.LastUR)
+	if !AllEqual("", opts.LastUR, opts.LastFirstULR, opts.LastULR, opts.LastLR, opts.LastUL) {
+		buf.WriteString(opts.LastUR)
 		for col, width := range widths {
 			if col == 1 {
-				buf.WriteString(opt.LastFirstULR)
+				buf.WriteString(opts.LastFirstULR)
 			} else if col != 0 {
-				buf.WriteString(opt.LastULR)
+				buf.WriteString(opts.LastULR)
 			}
 			for i := 0; i < width; i++ {
-				buf.WriteString(opt.LastLR)
+				buf.WriteString(opts.LastLR)
 			}
 		}
-		buf.WriteString(opt.LastUL)
+		buf.WriteString(opts.LastUL)
 		buf.WriteByte('\n')
 	}
 	return buf.String()
