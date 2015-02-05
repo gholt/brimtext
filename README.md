@@ -5,8 +5,8 @@ complex of these tools is Align, which allows for formatting "pretty tables".
 
 [API Documentation](http://godoc.org/github.com/gholt/brimtext)
 
-This is the latest developement area for the package.  
-For a stable version of the package, see http://github.com/gholt/brimtext-v1
+This is the v1 stable version of the package.  
+For the development work, see http://github.com/gholt/brimtext
 
 > Copyright 2014 Gregory Holt. All rights reserved.  
 > Use of this source code is governed by a BSD-style  
