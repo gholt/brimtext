@@ -3,7 +3,7 @@
 Package brimtext contains tools for working with text. Probably the most
 complex of these tools is Align, which allows for formatting "pretty tables".
 
-[API Documentation](http://godoc.org/github.com/gholt/brimtext)
+[API Documentation](http://godoc.org/github.com/gholt/brimtext-v1)
 
 This is the v1 stable version of the package.  
 For the development work, see http://github.com/gholt/brimtext
@@ -19,7 +19,7 @@ package main
 
 import (
     "fmt"
-    "github.com/gholt/brimtext"
+    "github.com/gholt/brimtext-v1"
 )
 
 func main() {
