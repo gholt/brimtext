@@ -27,6 +27,8 @@ func TestOrdinal(t *testing.T) {
 
 func TestThousandsSep(t *testing.T) {
 	for i, x := range map[int64]string{
+		-1000:               "-1,000",
+		-1:                  "-1",
 		0:                   "0",
 		999:                 "999",
 		1000:                "1,000",
@@ -37,6 +39,22 @@ func TestThousandsSep(t *testing.T) {
 		o := ThousandsSep(i, ",")
 		if o != x {
 			t.Errorf("ThousandsSep(%#v) %#v != %#v", i, o, x)
+		}
+	}
+}
+
+func TestThousandsSepU(t *testing.T) {
+	for i, x := range map[uint64]string{
+		0:                   "0",
+		999:                 "999",
+		1000:                "1,000",
+		100000:              "100,000",
+		1000000:             "1,000,000",
+		1000000000000000000: "1,000,000,000,000,000,000",
+	} {
+		o := ThousandsSepU(i, ",")
+		if o != x {
+			t.Errorf("ThousandsSepU(%#v) %#v != %#v", i, o, x)
 		}
 	}
 }

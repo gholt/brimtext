@@ -38,6 +38,16 @@ func ThousandsSep(v int64, sep string) string {
 	return s
 }
 
+// ThousandsSepU returns the number formatted using the separator at each
+// thousands position, such as ThousandsSepU(1234567, ",") giving 1,234,567.
+func ThousandsSepU(v uint64, sep string) string {
+	s := strconv.FormatUint(v, 10)
+	for i := len(s) - 3; i > 0; i -= 3 {
+		s = s[:i] + "," + s[i:]
+	}
+	return s
+}
+
 type humanSize struct {
 	d int64
 	s string
