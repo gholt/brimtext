@@ -5,8 +5,9 @@
 package brimtext
 
 import (
-	"code.google.com/p/go.crypto/ssh/terminal"
 	"os"
+
+	"golang.org/x/crypto/ssh/terminal"
 )
 
 // GetTTYWidth returns the width of controlling TTY if it can or 80.
