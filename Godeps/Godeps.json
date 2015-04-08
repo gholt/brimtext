@@ -1,5 +1,5 @@
 {
-	"ImportPath": "github.com/gholt/brimtext",
+	"ImportPath": "gopkg.in/gholt/brimtext.v1",
 	"GoVersion": "go1.4.2",
 	"Packages": [
 		"./..."
