@@ -13,7 +13,7 @@ or use `gopkg.in/gholt/brimtext.v1` as the import path.
 Also, you'd want to use the
 [V1 API Documentation](http://godoc.org/gopkg.in/gholt/brimtext.v1).
 
-> Copyright 2014 Gregory Holt. All rights reserved.  
+> Copyright Gregory Holt. All rights reserved.  
 > Use of this source code is governed by a BSD-style  
 > license that can be found in the LICENSE file.
 
@@ -24,7 +24,8 @@ package main
 
 import (
     "fmt"
-    "github.com/gholt/brimtext-v1"
+
+    "github.com/gholt/brimtext"
 )
 
 func main() {
