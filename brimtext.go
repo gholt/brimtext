@@ -6,14 +6,14 @@
 // complex of these tools is Align, which allows for formatting "pretty
 // tables".
 //
-// This is the latest development area for the package.
+// This is the latest stable version of the package.
 //
-// For the latest stable version of the package, switch to the
-// v1 branch at https://github.com/gholt/brimtext/tree/v1
-// or use gopkg.in/gholt/brimtext.v1 as the import path.
+// For the latest development version of the package, switch to the
+// master branch at https://github.com/gholt/brimtext
+// or use github.com/gholt/brimtext as the import path.
 //
-// Also, you'd want to use http://godoc.org/gopkg.in/gholt/brimtext.v1
-// for the v1 documentation.
+// Also, you'd want to use http://godoc.org/github.com/gholt/brimtext
+// for the development documentation.
 package brimtext
 
 import (
