@@ -4,14 +4,14 @@
 Package brimtext contains tools for working with text. Probably the most
 complex of these tools is Align, which allows for formatting "pretty tables".
 
-[API Documentation](http://godoc.org/gopkg.in/gholt/brimtext.v1)
+[API Documentation](http://godoc.org/github.com/gholt/brimtext)
 
-This is the latest stable version of the package.  
-For the latest development version of the package, switch to the
-[master branch](https://github.com/gholt/brimtext)  
-or use `github.com/gholt/brimtext` as the import path.  
+This is the latest development area for the package.  
+For the latest stable version of the package, switch to the
+[v1 branch](https://github.com/gholt/brimtext/tree/v1)  
+or use `gopkg.in/gholt/brimtext.v1` as the import path.  
 Also, you'd want to use the
-[Dev API Documentation](http://godoc.org/github.com/gholt/brimtext).
+[V1 API Documentation](http://godoc.org/gopkg.in/gholt/brimtext.v1).
 
 > Copyright Gregory Holt. All rights reserved.  
 > Use of this source code is governed by a BSD-style  
@@ -25,7 +25,7 @@ package main
 import (
     "fmt"
 
-    "gopkg.in/gholt/brimtext.v1"
+    "github.com/gholt/brimtext"
 )
 
 func main() {
