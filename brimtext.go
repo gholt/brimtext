@@ -118,9 +118,17 @@ func (s StringSliceToLowerSort) Less(x int, y int) bool {
 }
 
 // Wrap wraps text for more readable output.
+//
+// The width can be a positive int for a specific width, 0 for the default
+// width (attempted to get from terminal, 79 otherwise), or a negative number
+// for a width relative to the default.
+//
+// The indent1 is the prefix for the first line.
+//
+// The indent2 is the prefix for any second or subsequent lines.
 func Wrap(text string, width int, indent1 string, indent2 string) string {
 	if width < 1 {
-		width = GetTTYWidth() + width
+		width = GetTTYWidth() - 1 + width
 	}
 	bs := []byte(text)
 	bs = wrap(bs, width, []byte(indent1), []byte(indent2))

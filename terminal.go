@@ -18,6 +18,6 @@ func GetTTYWidth() int {
 	if width, _, err := terminal.GetSize(int(tty.Fd())); err != nil {
 		return 80
 	} else {
-		return width - 1
+		return width
 	}
 }
