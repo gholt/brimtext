@@ -194,3 +194,33 @@ paragraph.`
 		t.Errorf("Wrap(%#v) %#v != %#v", in, out, exp)
 	}
 }
+
+func TestAllEqual(t *testing.T) {
+	if !AllEqual() {
+		t.Fatal("")
+	}
+	if !AllEqual([]string{}...) {
+		t.Fatal("")
+	}
+	if !AllEqual("bob") {
+		t.Fatal("")
+	}
+	if !AllEqual("bob", "bob") {
+		t.Fatal("")
+	}
+	if !AllEqual("bob", "bob", "bob") {
+		t.Fatal("")
+	}
+	if !AllEqual([]string{"bob", "bob", "bob"}...) {
+		t.Fatal("")
+	}
+	if AllEqual("bob", "sue") {
+		t.Fatal("")
+	}
+	if AllEqual("bob", "bob", "sue") {
+		t.Fatal("")
+	}
+	if AllEqual([]string{"bob", "bob", "sue"}...) {
+		t.Fatal("")
+	}
+}

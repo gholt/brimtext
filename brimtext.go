@@ -180,9 +180,14 @@ func wrap(text []byte, width int, indent1 []byte, indent2 []byte) []byte {
 	return out.Bytes()
 }
 
-// AllEqual returns true if all the values each equal the compare string.
-func AllEqual(compare string, values ...string) bool {
-	for _, v := range values {
+// AllEqual returns true if all the values are equal strings; no strings,
+// AllEqual() or AllEqual([]string{}...), are considered AllEqual.
+func AllEqual(values ...string) bool {
+	if len(values) < 2 {
+		return true
+	}
+	compare := values[0]
+	for _, v := range values[1:] {
 		if v != compare {
 			return false
 		}
