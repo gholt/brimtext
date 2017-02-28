@@ -202,3 +202,37 @@ func AllEqual(values ...string) bool {
 	}
 	return true
 }
+
+// TrueString returns true if the string contains a recognized true value, such
+// as "true", "True", "TRUE", "yes", "on", etc.
+func TrueString(value string) bool {
+	v := strings.ToLower(value)
+	switch v {
+	case "true":
+		return true
+	case "yes":
+		return true
+	case "on":
+		return true
+	case "1":
+		return true
+	}
+	return false
+}
+
+// FalseString returns true if the string contains a recognized false value,
+// such as "false", "False", "FALSE", "no", "off", etc.
+func FalseString(value string) bool {
+	v := strings.ToLower(value)
+	switch v {
+	case "false":
+		return true
+	case "no":
+		return true
+	case "off":
+		return true
+	case "0":
+		return true
+	}
+	return false
+}

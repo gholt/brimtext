@@ -224,3 +224,75 @@ func TestAllEqual(t *testing.T) {
 		t.Fatal("")
 	}
 }
+
+func TestTrueString(t *testing.T) {
+	if TrueString("") {
+		t.Fatal("")
+	}
+	if TrueString("slkdfjsdkfj") {
+		t.Fatal("slkdfjsdkfj")
+	}
+	if !TrueString("true") {
+		t.Fatal("true")
+	}
+	if !TrueString("True") {
+		t.Fatal("True")
+	}
+	if !TrueString("TRUE") {
+		t.Fatal("TRUE")
+	}
+	if !TrueString("TruE") {
+		t.Fatal("TruE")
+	}
+	if !TrueString("on") {
+		t.Fatal("on")
+	}
+	if !TrueString("yes") {
+		t.Fatal("yes")
+	}
+	if !TrueString("1") {
+		t.Fatal("1")
+	}
+	if TrueString("-1") {
+		t.Fatal("-1")
+	}
+	if TrueString("2") {
+		t.Fatal("2")
+	}
+}
+
+func TestFalseString(t *testing.T) {
+	if FalseString("") {
+		t.Fatal("")
+	}
+	if FalseString("slkdfjsdkfj") {
+		t.Fatal("slkdfjsdkfj")
+	}
+	if !FalseString("false") {
+		t.Fatal("false")
+	}
+	if !FalseString("False") {
+		t.Fatal("False")
+	}
+	if !FalseString("FALSE") {
+		t.Fatal("FALSE")
+	}
+	if !FalseString("FalSe") {
+		t.Fatal("FalSe")
+	}
+	if !FalseString("off") {
+		t.Fatal("off")
+	}
+	if !FalseString("no") {
+		t.Fatal("no")
+	}
+	if !FalseString("0") {
+		t.Fatal("0")
+	}
+	if FalseString("-1") {
+		t.Fatal("-1")
+	}
+	if FalseString("2") {
+		t.Fatal("2")
+	}
+}
