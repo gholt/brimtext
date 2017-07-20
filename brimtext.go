@@ -76,8 +76,8 @@ func HumanSize1000(v float64) string {
 }
 
 // HumanSize1024 returns a more readable size format, such as
-// HumanSize1024(1234567) giving "1.18m".
-// These are 1,024 unit based: 1k = 1024, 1m = 1048576, etc.
+// HumanSize1024(1234567) giving "1.18M".
+// These are 1,024 unit based: 1K = 1024, 1M = 1048576, etc.
 func HumanSize1024(v float64) string {
 	return humanSize(v, 1024, []string{"", "K", "M", "G", "T", "P", "E", "Z", "Y"})
 }
