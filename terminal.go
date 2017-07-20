@@ -6,7 +6,7 @@ import (
 	"golang.org/x/crypto/ssh/terminal"
 )
 
-// GetTTYWidth returns the width of controlling TTY if it can or 80.
+// GetTTYWidth returns the width of the controlling TTY if it can or 80.
 func GetTTYWidth() int {
 	var tty *os.File
 	var err error

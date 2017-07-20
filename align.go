@@ -32,7 +32,7 @@ type AlignOptions struct {
 	RowUD       string
 	RowLastUD   string
 	// LeaveTrailingWhitespace should be set true if the last cell of data row
-	// needs spaces to fill to the end (usually needed when setting RawLastUD).
+	// needs spaces to fill to the end (usually needed when setting RowLastUD).
 	LeaveTrailingWhitespace bool
 	// FirstNilFirstUDR etc. control situations when the first nil data row is
 	// encountered. Can be used to separate the header from the rest of the
