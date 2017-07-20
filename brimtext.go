@@ -7,6 +7,7 @@ import (
 	"bytes"
 	"strconv"
 	"strings"
+	"unicode/utf8"
 )
 
 // OrdinalSuffix returns "st", "nd", "rd", etc. for the number given (1st, 2nd,
@@ -136,7 +137,7 @@ func Wrap(text string, width int, indent1 string, indent2 string) string {
 }
 
 func wrap(text []byte, width int, indent1 []byte, indent2 []byte) []byte {
-	if len(text) == 0 {
+	if utf8.RuneCount(text) == 0 {
 		return text
 	}
 	text = bytes.Replace(text, []byte{'\r', '\n'}, []byte{'\n'}, -1)
@@ -146,7 +147,7 @@ func wrap(text []byte, width int, indent1 []byte, indent2 []byte) []byte {
 		lineLen := 0
 		start := true
 		for _, word := range bytes.Split(par, []byte{' '}) {
-			wordLen := len(word)
+			wordLen := utf8.RuneCount(word)
 			if wordLen == 0 {
 				continue
 			}
@@ -167,7 +168,7 @@ func wrap(text []byte, width int, indent1 []byte, indent2 []byte) []byte {
 			}
 			if start {
 				out.Write(indent1)
-				lineLen += len(indent1)
+				lineLen += utf8.RuneCount(indent1)
 				out.Write(word)
 				lineLen += wordLen
 				start = false
@@ -175,7 +176,7 @@ func wrap(text []byte, width int, indent1 []byte, indent2 []byte) []byte {
 				out.WriteByte('\n')
 				out.Write(indent2)
 				out.Write(word)
-				lineLen = len(indent2) + wordLen
+				lineLen = utf8.RuneCount(indent2) + wordLen
 			} else {
 				out.WriteByte(' ')
 				out.Write(word)

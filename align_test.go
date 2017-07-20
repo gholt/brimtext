@@ -7,6 +7,32 @@ import (
 	"github.com/gholt/brimtext"
 )
 
+func TestAlignUnicode(t *testing.T) {
+	opts := &brimtext.AlignOptions{}
+	opts.RowFirstUD = ">>>"
+	opts.RowLastUD = "<<<"
+	opts.RowSecondUD = "||"
+	opts.RowUD = "||"
+	opts.LeaveTrailingWhitespace = true
+	opts.Alignments = []brimtext.Alignment{brimtext.Left, brimtext.Right, brimtext.Right, brimtext.Left}
+	opts.Widths = []int{0, 5, 10, 5}
+	out := brimtext.Align([][]string{
+		[]string{"", "one", "two", "three"},
+		[]string{"a", "one a b \u0041 \u00c0 \uff21 \U0001d400 d efg", "two abc d ef \u0041 \u00c0 \uff21 \U0001d400", "three a \u0041 \u00c0 \uff21 \U0001d400 bcd efg hij"},
+	}, opts)
+	exp := `>>> ||  one||       two||three<<<
+>>>a||one a|| two abc d||three<<<
+>>> ||b A À||ef A À Ａ 𝐀||a A À<<<
+>>> ||Ａ 𝐀 d||          ||Ａ 𝐀  <<<
+>>> ||  efg||          ||bcd  <<<
+>>> ||     ||          ||efg  <<<
+>>> ||     ||          ||hij  <<<
+`
+	if out != exp {
+		t.Errorf("%#v != %#v", out, exp)
+	}
+}
+
 func TestAlign(t *testing.T) {
 	out := brimtext.Align([][]string{
 		[]string{"", "one", "two", "three"},

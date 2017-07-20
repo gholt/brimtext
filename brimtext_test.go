@@ -118,6 +118,19 @@ func TestStringSliceToLowerSort(t *testing.T) {
 	}
 }
 
+func TestWrapUnicode(t *testing.T) {
+	in := "Just a test sentence with Unicode \u0041 \u00c0 \uff21 \U0001d400 characters."
+	out := Wrap(in, 12, "", "")
+	exp := `Just a test
+sentence
+with Unicode
+A À Ａ 𝐀
+characters.`
+	if out != exp {
+		t.Errorf("Wrap(%#v) %#v != %#v", in, out, exp)
+	}
+}
+
 func TestWrap(t *testing.T) {
 	in := ""
 	out := Wrap(in, 79, "", "")

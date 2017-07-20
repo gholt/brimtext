@@ -3,6 +3,7 @@ package brimtext
 import (
 	"bytes"
 	"strings"
+	"unicode/utf8"
 )
 
 type Alignment int
@@ -344,8 +345,8 @@ func Align(data [][]string, opts *AlignOptions) string {
 			widths = append(widths, len(row[len(widths)]))
 		}
 		for c, v := range row {
-			if len(v) > widths[c] {
-				widths[c] = len(v)
+			if utf8.RuneCountInString(v) > widths[c] {
+				widths[c] = utf8.RuneCountInString(v)
 			}
 		}
 	}
@@ -357,11 +358,11 @@ func Align(data [][]string, opts *AlignOptions) string {
 		}
 		alignments = newal
 	}
-	est := len(opts.RowFirstUD)
+	est := utf8.RuneCountInString(opts.RowFirstUD)
 	for _, w := range widths {
-		est += w + len(opts.RowUD)
+		est += w + utf8.RuneCountInString(opts.RowUD)
 	}
-	est += len(opts.RowLastUD) + 1
+	est += utf8.RuneCountInString(opts.RowLastUD) + 1
 	est *= len(data)
 	buf := bytes.NewBuffer(make([]byte, 0, est))
 	if !AllEqual("", opts.FirstDR, opts.FirstFirstDLR, opts.FirstDLR, opts.FirstLR, opts.FirstDL) {
@@ -426,24 +427,24 @@ func Align(data [][]string, opts *AlignOptions) string {
 			}
 			switch alignments[c] {
 			case Right:
-				for i := widths[c] - len(v); i > 0; i-- {
+				for i := widths[c] - utf8.RuneCountInString(v); i > 0; i-- {
 					buf.WriteRune(' ')
 				}
 				buf.WriteString(v)
 			case Center:
-				for i := (widths[c] - len(v)) / 2; i > 0; i-- {
+				for i := (widths[c] - utf8.RuneCountInString(v)) / 2; i > 0; i-- {
 					buf.WriteRune(' ')
 				}
 				buf.WriteString(v)
 				if opts.LeaveTrailingWhitespace || c < len(row)-1 {
-					for i := widths[c] - ((widths[c]-len(v))/2 + len(v)); i > 0; i-- {
+					for i := widths[c] - ((widths[c]-utf8.RuneCountInString(v))/2 + utf8.RuneCountInString(v)); i > 0; i-- {
 						buf.WriteRune(' ')
 					}
 				}
 			default:
 				buf.WriteString(v)
 				if opts.LeaveTrailingWhitespace || c < len(row)-1 {
-					for i := widths[c] - len(v); i > 0; i-- {
+					for i := widths[c] - utf8.RuneCountInString(v); i > 0; i-- {
 						buf.WriteRune(' ')
 					}
 				}
