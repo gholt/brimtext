@@ -205,7 +205,11 @@ func AllEqual(values ...string) bool {
 }
 
 // TrueString returns true if the string contains a recognized true value, such
-// as "true", "True", "TRUE", "yes", "on", etc.
+// as "true", "True", "TRUE", "yes", "on", etc. Yes, there is already
+// strconv.ParseBool, but this function is often easier to work with since it
+// just returns true or false instead of (bool, error) like ParseBool does. If
+// you need to differentiate between true, false, and unknown, ParseBool should
+// be your choice.
 func TrueString(value string) bool {
 	v := strings.ToLower(value)
 	switch v {
