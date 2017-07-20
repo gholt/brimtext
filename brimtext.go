@@ -5,6 +5,8 @@ package brimtext
 
 import (
 	"bytes"
+	"fmt"
+	"math"
 	"strconv"
 	"strings"
 	"unicode/utf8"
@@ -45,45 +47,39 @@ func ThousandsSepU(v uint64, sep string) string {
 	return s
 }
 
-type humanSize struct {
-	d int64
-	s string
-}
-
-var humanSizes = []humanSize{
-	humanSize{int64(1024), "K"},
-	humanSize{int64(1024) << 10, "M"},
-	humanSize{int64(1024) << 20, "G"},
-	humanSize{int64(1024) << 30, "T"},
-	humanSize{int64(1024) << 40, "P"},
-	humanSize{int64(1024) << 50, "E"},
-}
-
-// Returns a more readable size format, such as HumanSize(1234567, "") giving
-// "1M". For values less than 1K, it is common that no suffix letter should be
-// added; but the appendBytes parameter is provided in case clarity is needed.
-func HumanSize(b int64, appendBytes string) string {
-	if b < 1024 {
-		v := strconv.FormatInt(b, 10)
-		if appendBytes != "" {
-			return v + appendBytes
-		}
-		return v
-	}
-	c := b
-	s := appendBytes
-	for _, h := range humanSizes {
-		c = b / h.d
-		r := b % h.d
-		if r >= h.d/2 {
-			c++
-		}
-		if c < 1024 {
-			s = h.s
+func humanSize(v float64, u float64, s []string) string {
+	n := v
+	i := 0
+	for ; i < len(s); i++ {
+		if math.Ceil(n) < 1000 {
 			break
 		}
+		n = n / u
 	}
-	return strconv.FormatInt(c, 10) + s
+	if i >= len(s) {
+		return fmt.Sprintf("%.0f%s", n*u, s[len(s)-1])
+	}
+	if i == 0 {
+		return fmt.Sprintf("%.4g", n)
+	}
+	if n < 1 {
+		return fmt.Sprintf("%.2g%s", n, s[i])
+	}
+	return fmt.Sprintf("%.3g%s", n, s[i])
+}
+
+// HumanSize1000 returns a more readable size format, such as
+// HumanSize1000(1234567) giving "1.23m".
+// These are 1,000 unit based: 1k = 1000, 1m = 1000000, etc.
+func HumanSize1000(v float64) string {
+	return humanSize(v, 1000, []string{"", "k", "m", "g", "t", "p", "e", "z", "y"})
+}
+
+// HumanSize1024 returns a more readable size format, such as
+// HumanSize1024(1234567) giving "1.18m".
+// These are 1,024 unit based: 1k = 1024, 1m = 1048576, etc.
+func HumanSize1024(v float64) string {
+	return humanSize(v, 1024, []string{"", "K", "M", "G", "T", "P", "E", "Z", "Y"})
 }
 
 // Sentence converts the value into a sentence, uppercasing the first character
