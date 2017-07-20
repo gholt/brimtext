@@ -209,7 +209,8 @@ func AllEqual(values ...string) bool {
 // strconv.ParseBool, but this function is often easier to work with since it
 // just returns true or false instead of (bool, error) like ParseBool does. If
 // you need to differentiate between true, false, and unknown, ParseBool should
-// be your choice.
+// be your choice. Although I suppose you could use TrueString(s),
+// FalseString(s), and !TrueString(s) && !FalseString(s).
 func TrueString(value string) bool {
 	v := strings.ToLower(value)
 	switch v {
@@ -226,7 +227,12 @@ func TrueString(value string) bool {
 }
 
 // FalseString returns true if the string contains a recognized false value,
-// such as "false", "False", "FALSE", "no", "off", etc.
+// such as "false", "False", "FALSE", "no", "off", etc. Yes, there is already
+// strconv.ParseBool, but this function is often easier to work with since it
+// just returns true or false instead of (bool, error) like ParseBool does. If
+// you need to differentiate between true, false, and unknown, ParseBool should
+// be your choice. Although I suppose you could use TrueString(s),
+// FalseString(s), and !TrueString(s) && !FalseString(s).
 func FalseString(value string) bool {
 	v := strings.ToLower(value)
 	switch v {
