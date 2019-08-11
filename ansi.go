@@ -122,3 +122,24 @@ func ClosestANSIForeground(red int, green int, blue int) []byte {
 	}
 	return sequence.Bytes()
 }
+
+func StripANSIEscapes(v string) string {
+	bs := []byte(v)
+	ln := len(bs)
+	for i := 0; i < ln; i++ {
+		if bs[i] == 27 {
+			for j := i; j < ln; j++ {
+				if bs[j] == 'm' {
+					copy(bs[i:], bs[j+1:])
+					ln -= j + 1 - i
+					break
+				}
+			}
+		}
+	}
+	return string(bs[:ln])
+}
+
+func RuneLenStripANSIEscapes(v string) int {
+	return len([]rune(StripANSIEscapes(v)))
+}

@@ -254,6 +254,22 @@ c     one c two c three c
 	}
 }
 
+func TestAlignWithANSIEscapes(t *testing.T) {
+	opts := brimtext.NewSimpleAlignOptions()
+	out := brimtext.Align([][]string{
+		[]string{"", "one", "two", "three"},
+		[]string{"a", "one a", "two \x1b[1232131232;12312m a", "three a"},
+	}, opts)
+	exp := `+---+-------+--------+---------+
+|   | one   | two    | three   |
+| a | one a | two ` + "\x1b" + `[1232131232;12312m a | three a |
++---+-------+--------+---------+
+`
+	if out != exp {
+		t.Errorf("%#v != %#v", out, exp)
+	}
+}
+
 func ExampleAlign_default() {
 	fmt.Println(brimtext.Align([][]string{
 		{"", "Bob", "Sue", "John"},

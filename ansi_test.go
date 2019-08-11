@@ -162,3 +162,16 @@ func TestClosestANSIForeground(t *testing.T) {
 		}
 	}
 }
+
+func TestStripANSIEscapes(t *testing.T) {
+	for in, exp := range map[string]string{
+		"link":                  "link",
+		"link\x1bstuffm":        "link",
+		"link\x1bstuffmandmore": "linkandmore",
+	} {
+		out := StripANSIEscapes(in)
+		if out != exp {
+			t.Errorf("StripANSIEscapes(%q) %q != %q", in, out, exp)
+		}
+	}
+}
