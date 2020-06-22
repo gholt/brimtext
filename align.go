@@ -280,7 +280,7 @@ func NewUnicodeBoxedAlignOptions() *AlignOptions {
 // Align will format a table according to options. If opts is nil,
 // NewDefaultAlignOptions is used.
 func Align(data [][]string, opts *AlignOptions) string {
-	if data == nil || len(data) == 0 {
+	if len(data) == 0 {
 		return ""
 	}
 	if opts == nil {

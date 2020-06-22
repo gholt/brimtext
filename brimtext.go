@@ -47,7 +47,27 @@ func ThousandsSepU(v uint64, sep string) string {
 	return s
 }
 
-func humanSize(v float64, u float64, s []string) string {
+// HumanSize returns a more readable size format. Quick, "standard"
+// implementations are HumanSize1000 and HumanSize1024, but this more generic
+// function is provided so you can tweak the output a bit more.
+//
+// Here are the implementations of the two standard functions, to get an idea
+// of how you might wish to use HumanSize directly.
+//
+//  // HumanSize1000 returns a more readable size format, such as
+//  // HumanSize1000(1234567) giving "1.23m".
+//  // These are 1,000 unit based: 1k = 1000, 1m = 1000000, etc.
+//  func HumanSize1000(v float64) string {
+//  	return HumanSize(v, 1000, []string{"", "k", "m", "g", "t", "p", "e", "z", "y"})
+//  }
+//
+//  // HumanSize1024 returns a more readable size format, such as
+//  // HumanSize1024(1234567) giving "1.18M".
+//  // These are 1,024 unit based: 1K = 1024, 1M = 1048576, etc.
+//  func HumanSize1024(v float64) string {
+//  	return HumanSize(v, 1024, []string{"", "K", "M", "G", "T", "P", "E", "Z", "Y"})
+//  }
+func HumanSize(v float64, u float64, s []string) string {
 	n := v
 	i := 0
 	for ; i < len(s); i++ {
@@ -72,14 +92,14 @@ func humanSize(v float64, u float64, s []string) string {
 // HumanSize1000(1234567) giving "1.23m".
 // These are 1,000 unit based: 1k = 1000, 1m = 1000000, etc.
 func HumanSize1000(v float64) string {
-	return humanSize(v, 1000, []string{"", "k", "m", "g", "t", "p", "e", "z", "y"})
+	return HumanSize(v, 1000, []string{"", "k", "m", "g", "t", "p", "e", "z", "y"})
 }
 
 // HumanSize1024 returns a more readable size format, such as
 // HumanSize1024(1234567) giving "1.18M".
 // These are 1,024 unit based: 1K = 1024, 1M = 1048576, etc.
 func HumanSize1024(v float64) string {
-	return humanSize(v, 1024, []string{"", "K", "M", "G", "T", "P", "E", "Z", "Y"})
+	return HumanSize(v, 1024, []string{"", "K", "M", "G", "T", "P", "E", "Z", "Y"})
 }
 
 // Sentence converts the value into a sentence, uppercasing the first character
@@ -154,9 +174,7 @@ func wrap(text []byte, width int, indent1 []byte, indent2 []byte) []byte {
 					break
 				}
 				j := bytes.IndexByte(scan[i+1:], 'm')
-				if j == -1 {
-					i++
-				} else {
+				if j != -1 {
 					j += 2
 					wordLen -= j
 					scan = scan[i+j:]

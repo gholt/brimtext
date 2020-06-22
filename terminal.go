@@ -13,7 +13,7 @@ func GetTTYWidth() int {
 	if tty, err = os.OpenFile("/dev/tty", os.O_RDWR, 0600); err != nil {
 		tty = os.Stdout
 	} else {
-		defer tty.Close()
+		defer func() { _ = tty.Close() }()
 	}
 	if width, _, err := terminal.GetSize(int(tty.Fd())); err != nil {
 		return 80
